@@ -1,4 +1,4 @@
-import { ProductStore } from "../factorys/StoreFactory";
+import { ProductStore } from "../factories/StoreFactory";
 
 
 type ProductsGroupedByBranch = Record<string, ProductStore[]>;

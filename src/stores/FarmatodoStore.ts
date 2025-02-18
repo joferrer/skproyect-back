@@ -1,6 +1,6 @@
-import { ProductStore, Store } from "../factorys/StoreFactory";
-import { randomUUID } from 'crypto'
-import puppeteer from "puppeteer"; "puppeteer"
+import { ProductStore, Store } from "../factories/StoreFactory";
+import { randomUUID } from 'crypto';
+import {puppeteerPromise} from "../puppeteer/config"; 
 
 const URL_PAGE = "https://www.farmatodo.com.co/categorias/dermocosmetica/facial"
 
@@ -9,7 +9,7 @@ const URL_PAGE = "https://www.farmatodo.com.co/categorias/dermocosmetica/facial"
  * @returns 
  */
 const getProductsOfWeb = async (): Promise<ProductStore[]> => {
-
+  const puppeteer = await puppeteerPromise;
   let listOfProducts = []
   const browser = await puppeteer.launch({
     headless: false,
@@ -22,6 +22,7 @@ const getProductsOfWeb = async (): Promise<ProductStore[]> => {
   const productsContent = await page.$$('.content-product')
 
   for (const product of productsContent) {
+    //@ts-ignore
     const { name, branch, price } = await page.evaluate((el) => {
       const productName = el.querySelector("div.text-left.info > p.text-title")?.textContent || ""
       const productBranch = el.querySelector("div.text-left.info > p.text-brand")?.textContent || ""
@@ -29,7 +30,9 @@ const getProductsOfWeb = async (): Promise<ProductStore[]> => {
 
       return Promise.resolve({ name: productName, branch: productBranch, price: productPrice })
 
-    }, product).catch((_err) => { }) || {}
+    }, product).catch(() => { 
+      throw new Error("Error in the page Farmatodo")
+    }) || {}
 
     if (!!!name || !!!price) continue;
     const newProduct: ProductStore = {
