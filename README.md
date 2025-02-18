@@ -1,5 +1,6 @@
 # skproyect-back
 
+This proyect is dev using pnpm.
 
 ## To start dev
 
