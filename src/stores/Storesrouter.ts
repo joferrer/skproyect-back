@@ -10,7 +10,8 @@ router.get('/', async (_req, res) => {
 })
 
 router.get('/bybranch', async (_req, res) => {
-    const productByBranch = await getProductsGroupByBranch().catch((_err) => {
+    const productByBranch = await getProductsGroupByBranch().catch((err) => {
+        console.error(err)
         res.status(500).send("Opps something went wrong! :(")
     })
     res.send(JSON.stringify(productByBranch))

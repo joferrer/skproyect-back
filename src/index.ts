@@ -16,7 +16,7 @@ app.use((_req, _res, next) => {
 })
 
 app.get('/', async (_req, res) => {
-  res.send('Hello World!')
+  res.send(`Welcome to the store API ${process.env.PROD ? 'PROD' : 'DEV'}`)
 })
 
 app.use('/products', StoreRouter)

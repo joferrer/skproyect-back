@@ -1,6 +1,6 @@
 import { ProductStore, Store } from "../factories/StoreFactory";
 import { randomUUID } from 'crypto';
-import {puppeteerPromise} from "../puppeteer/config"; 
+import puppeteer from "puppeteer";
 
 const URL_PAGE = "https://www.farmatodo.com.co/categorias/dermocosmetica/facial"
 
@@ -9,12 +9,9 @@ const URL_PAGE = "https://www.farmatodo.com.co/categorias/dermocosmetica/facial"
  * @returns 
  */
 const getProductsOfWeb = async (): Promise<ProductStore[]> => {
-  const puppeteer = await puppeteerPromise;
-  let listOfProducts = []
-  const browser = await puppeteer.launch({
-    headless: false,
 
-  })
+  let listOfProducts = []
+  const browser = await puppeteer.launch({ headless: true })
   const page = await browser.newPage()
   await page.goto(URL_PAGE, {})
   await page.waitForSelector('.content-product')
