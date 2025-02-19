@@ -7,6 +7,8 @@ export const getOptions = async () => {
 
 
     const options = {
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        ignoreDefaultArgs: ['--disable-extensions'],
         headless: true,
         ignoreHTTPSErrors: true,
     }
