@@ -26,5 +26,10 @@ app.use((_req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Server listening in port ${PORT}: https:localhost:${PORT}`)
+  const prod = process.env.RAILWAY_PUBLIC_DOMAIN ? 'PROD' : 'DEV'
+  console.log(`Server listening in port ${PORT}`)
+  console.log(`Server running in ${prod} mode`)
+  if (prod === 'PROD') {
+    console.log(`Server running in ${process.env.RAILWAY_PUBLIC_DOMAIN}`)
+  }
 })
